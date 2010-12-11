@@ -1,7 +1,7 @@
 Raphael.fn.piechart = function (offsetX, offsetY, radius, values, opts) {
-		opts = opts || {}
 		var paper = this;
 		var chart = this.set();
+		chart.opts = opts || {}
 		var startAngle = 0;
 		var total = 0;
 		for(var i = 0; i < values.length; i++){
@@ -39,24 +39,37 @@ Raphael.fn.piechart = function (offsetX, offsetY, radius, values, opts) {
 		chart.drag(
 			function(dx, dy){
 				var startAngle = -Raphael.angle(this.startX+dx, this.startY+dy, offsetX, offsetY);
-				var prevSlice = chart[this.id-1];
-				if(prevSlice==undefined){
-					prevSlice = chart[chart.length-1]
+				if(degreesBetween(startAngle, this.rightSlice.endAngle)<=5 || degreesBetween(this.leftSlice.startAngle, startAngle)<=5){
+					fireEvent(this.rightSlice.node, "mouseup");
 				}
-				if(degreesBetween(startAngle, this.endAngle)<=5 || degreesBetween(prevSlice.startAngle, startAngle)<=5){
-					fireEvent(this.node, "mouseup");
-				}
-				this.attr("path", sliceDef(startAngle, this.endAngle));
-				this.attr("fill-opacity", degreesBetween(startAngle, this.endAngle)/360);
-				this.startAngle = startAngle;
-				prevSlice.attr("path", sliceDef(prevSlice.startAngle, startAngle));
-				prevSlice.attr("fill-opacity", degreesBetween(prevSlice.startAngle, startAngle)/360);
-				prevSlice.endAngle = startAngle;
+				this.rightSlice.attr("path", sliceDef(startAngle, this.rightSlice.endAngle));
+				this.rightSlice.attr("fill-opacity", degreesBetween(startAngle, this.rightSlice.endAngle)/360);
+				this.rightSlice.startAngle = startAngle;
+				this.leftSlice.attr("path", sliceDef(this.leftSlice.startAngle, startAngle));
+				this.leftSlice.attr("fill-opacity", degreesBetween(this.leftSlice.startAngle, startAngle)/360);
+				this.leftSlice.endAngle = startAngle;
 			},
 			function(x, y){
-					this.toFront();
-					this.startX = x-paper.canvas.offsetLeft;
-					this.startY = y-paper.canvas.offsetTop;
+				this.startX = x-paper.canvas.offsetLeft;
+				this.startY = y-paper.canvas.offsetTop;
+				var clickAngle = -Raphael.angle(this.startX, this.startY, offsetX, offsetY);
+				this.rightSlice = this;
+				if(degreesBetween(this.startAngle, clickAngle) > degreesBetween(clickAngle, this.endAngle)){
+					this.rightSlice = chart[this.id+1];
+					if(this.rightSlice==undefined){
+						this.rightSlice = chart[0];
+					}
+				}
+				this.leftSlice = chart[this.rightSlice.id-1];
+				if(this.leftSlice==undefined){
+					this.leftSlice = chart[chart.length-1]
+				}
+				this.rightSlice.attr("fill", "red")
+				this.leftSlice.attr("fill", "yellow")
+			},
+		function(){
+			this.rightSlice.attr("fill", "blue")
+			this.leftSlice.attr("fill", "blue")
 		}); 
 		
 		return chart

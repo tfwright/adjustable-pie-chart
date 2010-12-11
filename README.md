@@ -16,4 +16,6 @@ Currently supported:
 1. color: the base color for the chart
 2. onchange: a function for the chart to call when it is adjusted
 
-Obviously, a work in progress.  Loosely based on Dmitry Baranovskiy's examples [here](http://raphaeljs.com/pie.html), [here](http://raphaeljs.com/growing-pie.html) and [here](http://g.raphaeljs.com/piechart2.html).
+Obviously, a work in progress, and still a bit buggy. Needless to say, bug reports/pull requests welcome.
+
+Loosely based on Dmitry Baranovskiy's examples [here](http://raphaeljs.com/pie.html), [here](http://raphaeljs.com/growing-pie.html) and [here](http://g.raphaeljs.com/piechart2.html).

@@ -1,6 +1,0 @@
-This is a pure Javascript library for creating pie charts that can be adjusted on the fly:
-
-r = Raphael(0, 0, 500, 500)
-chart = r.piechart(250, 250, 100, [10, 22, 32, 2, 18])
-
-Obviously, a work in progress.

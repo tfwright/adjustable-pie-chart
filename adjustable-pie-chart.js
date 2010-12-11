@@ -33,11 +33,10 @@ Raphael.fn.piechart = function (offsetX, offsetY, radius, values) {
 			startAngle += (endAngle - startAngle);
 		}
 		
-		chart.drag(function(){
-			},
-			function(dx, dy, event){
+		chart.drag(
+			function(dx, dy){
 				this.toFront();
-				var startAngle = -Raphael.angle(event.pageX-paper.canvas.offsetLeft, event.pageY-paper.canvas.offsetTop, offsetX, offsetY);
+				var startAngle = -Raphael.angle(this.startX+dx, this.startY+dy, offsetX, offsetY);
 				this.attr("path", sliceDef(startAngle, this.endAngle));
 				this.startAngle = startAngle;
 				var prevSlice = chart[this.id-1];
@@ -47,7 +46,11 @@ Raphael.fn.piechart = function (offsetX, offsetY, radius, values) {
 				prevSlice.attr("path", sliceDef(prevSlice.startAngle, startAngle));
 				prevSlice.endAngle = startAngle;
 			},
-			function(event){
+			function(x, y){
+					this.startX = x;
+					this.startY = y;
+				},
+			function(){
 		}); 
 		
 		//chart.mousedown(function(event){

@@ -53,33 +53,6 @@ Raphael.fn.piechart = function (offsetX, offsetY, radius, values) {
 			function(){
 		}); 
 		
-		//chart.mousedown(function(event){
-		//	alert("chart!")
-		//	var clickAngle = Raphael.angle(offsetX, offsetY, event.pageX-paper.canvas.offsetLeft, event.pageY-paper.canvas.offsetTop)
-		//	for(var i = 0; i < chart.length; i++){
-		//		var slicePoint = chart[0].getPointAtLength(100);
-		//		var thisAngle = Raphael.angle(offsetX, offsetY, slicePoint.x, slicePoint.y);
-		//		if(thisAngle==clickAngle){
-		//			var slice = chart[i];
-		//			alert("good click!")
-		//			break;
-		//		}
-		//	}
-		//	if(slice==undefined){
-		//		alert("misclick")
-		//		return false;
-		//	}
-		//	chart.mousemove(function(event){
-		//		var startAngle = Raphael.angle(offsetX, offsetY, event.pageX-paper.canvas.offsetLeft, event.pageY-paper.canvas.offsetTop)
-		//		var endPoint = slice.getPointAtLength(slice.getTotalLength());
-		//		var endAngle = Raphael.angle(offsetX, offsetY, endPoint.x, endPoint.y);
-		//		slice.attr("path", sliceDef(startAngle, endAngle));
-		//	});
-		//});
-		//chart.mouseup(function(event){
-		//	slice.unmousemove();
-		//});
-		
 		return chart
 		
 };

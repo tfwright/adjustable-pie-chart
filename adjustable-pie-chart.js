@@ -8,6 +8,16 @@ Raphael.fn.piechart = function (offsetX, offsetY, radius, values, opts) {
 			total += values[i];
 		}
 		
+		for(var i = 0; i < values.length; i++){
+			var degrees = (360 * values[i]/total)
+			var endAngle = startAngle - degrees;
+			var slice = this.path(sliceDef(startAngle, endAngle)).attr({stroke: "#000", "stroke-width": 2, fill: opts.color || "#000", "fill-opacity": values[i]/total});
+			slice.startAngle = startAngle;
+			slice.endAngle = endAngle;
+			chart.push(slice)
+			startAngle += (endAngle - startAngle);
+		}
+		
 		function degreesBetween(startAngle, endAngle){
 			if(-endAngle < -startAngle){
 				return 360 - -startAngle + -endAngle
@@ -26,14 +36,12 @@ Raphael.fn.piechart = function (offsetX, offsetY, radius, values, opts) {
         return pathDef;
     }
 
-		for(var i = 0; i < values.length; i++){
-			var degrees = (360 * values[i]/total)
-			var endAngle = startAngle - degrees;
-			var slice = this.path(sliceDef(startAngle, endAngle)).attr({stroke: "#000", "stroke-width": 2, fill: opts.color || "#000", "fill-opacity": values[i]/total});
-			slice.startAngle = startAngle;
-			slice.endAngle = endAngle;
-			chart.push(slice)
-			startAngle += (endAngle - startAngle);
+		function computeValues(){
+			var values = {};
+			for(var i = 0; i < chart.length; i++){
+				values[chart[i].id] = Math.round(total*degreesBetween(chart[i].startAngle, chart[i].endAngle)/360);
+			}
+			return values;
 		}
 		
 		chart.drag(
@@ -49,7 +57,7 @@ Raphael.fn.piechart = function (offsetX, offsetY, radius, values, opts) {
 				this.leftSlice.attr("path", sliceDef(this.leftSlice.startAngle, startAngle));
 				this.leftSlice.attr("fill-opacity", degreesBetween(this.leftSlice.startAngle, startAngle)/360);
 				this.leftSlice.endAngle = startAngle;
-				chart.opts.onchange.call(this, Math.round(percent*100));
+				chart.opts.onchange.call(this, computeValues());
 			},
 			function(x, y){
 				this.startX = x-paper.canvas.offsetLeft;

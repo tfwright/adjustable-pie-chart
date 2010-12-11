@@ -7,10 +7,18 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
     <script>
       $(document).ready(function(){
+          var values = $([10, 22, 32, 2, 18]);
           r = Raphael("chart", 300, 300);
-          chart = r.piechart(150, 150, 100, [10, 22, 32, 2, 18], {color:"blue",onchange:function(percent){
-            $("#current-value").val(percent);
+          r.piechart(150, 150, 100, values, {color:"blue",onchange:function(values){
+            $.each(values, function(key, value){
+              $('#value-'+key).val(value);
+            });
           }});
+          values.each(function(i, v){
+            $("#values").append('<label for="' + i + '">' + i + '</label>');
+            $("#values").append('<input type="text" size="25" id="value-' + i + '" value="' + v + '"/>');
+            $("#values").append('<br/>')
+          });
         })
     </script>
     <style>
@@ -30,10 +38,7 @@
     <div id="container">
       Drag lines between segments to resize
       <div id="chart"></div>
-      <div id="values">
-        <label for="current-value">Current value:</label>
-        <input type="text" size="25" id="current-value">
-      </div>
+      <div id="values"></div>
     </div>
   </body>
 </html>

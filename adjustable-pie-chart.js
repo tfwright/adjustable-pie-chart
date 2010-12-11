@@ -55,8 +55,8 @@ Raphael.fn.piechart = function (offsetX, offsetY, radius, values, opts) {
 			},
 			function(x, y){
 					this.toFront();
-					this.startX = x;
-					this.startY = y;
+					this.startX = x-paper.canvas.offsetLeft;
+					this.startY = y-paper.canvas.offsetTop;
 		}); 
 		
 		return chart

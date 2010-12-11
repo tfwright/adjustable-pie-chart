@@ -4,11 +4,14 @@
     <title>adjustable-pie-chart demo</title>
     <script src="raphael-min.js"/></script>
     <script src="adjustable-pie-chart.js"/></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
     <script>
-      window.onload = function(){
+      $(document).ready(function(){
           r = Raphael("chart", 300, 300);
-          chart = r.piechart(150, 150, 100, [10, 22, 32, 2, 18], {color:"blue"});
-      }
+          chart = r.piechart(150, 150, 100, [10, 22, 32, 2, 18], {color:"blue",onchange:function(percent){
+            $("#current-value").val(percent);
+          }});
+        })
     </script>
     <style>
       body {
@@ -27,6 +30,10 @@
     <div id="container">
       Drag lines between segments to resize
       <div id="chart"></div>
+      <div id="values">
+        <label for="current-value">Current value:</label>
+        <input type="text" size="25" id="current-value">
+      </div>
     </div>
   </body>
 </html>

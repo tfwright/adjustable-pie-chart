@@ -43,11 +43,13 @@ Raphael.fn.piechart = function (offsetX, offsetY, radius, values, opts) {
 					fireEvent(this.rightSlice.node, "mouseup");
 				}
 				this.rightSlice.attr("path", sliceDef(startAngle, this.rightSlice.endAngle));
-				this.rightSlice.attr("fill-opacity", degreesBetween(startAngle, this.rightSlice.endAngle)/360);
+				var percent = degreesBetween(startAngle, this.rightSlice.endAngle)/360;
+				this.rightSlice.attr("fill-opacity", percent);
 				this.rightSlice.startAngle = startAngle;
 				this.leftSlice.attr("path", sliceDef(this.leftSlice.startAngle, startAngle));
 				this.leftSlice.attr("fill-opacity", degreesBetween(this.leftSlice.startAngle, startAngle)/360);
 				this.leftSlice.endAngle = startAngle;
+				chart.opts.onchange.call(this, Math.round(percent*100));
 			},
 			function(x, y){
 				this.startX = x-paper.canvas.offsetLeft;

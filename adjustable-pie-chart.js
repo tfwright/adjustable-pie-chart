@@ -1,5 +1,5 @@
-Raphael.fn.piechart = function (offsetX, offsetY, radius, values) {
-		
+Raphael.fn.piechart = function (offsetX, offsetY, radius, values, opts) {
+		opts = opts || {}
 		var paper = this;
 		var chart = this.set();
 		var startAngle = 0;
@@ -29,7 +29,7 @@ Raphael.fn.piechart = function (offsetX, offsetY, radius, values) {
 		for(var i = 0; i < values.length; i++){
 			var degrees = (360 * values[i]/total)
 			var endAngle = startAngle - degrees;
-			var slice = this.path(sliceDef(startAngle, endAngle)).attr({stroke: "#000", "stroke-width": 2, fill: "#fff"});
+			var slice = this.path(sliceDef(startAngle, endAngle)).attr({stroke: "#000", "stroke-width": 2, fill: opts.color || "#000", "fill-opacity": values[i]/total});
 			slice.startAngle = startAngle;
 			slice.endAngle = endAngle;
 			chart.push(slice)
@@ -47,8 +47,10 @@ Raphael.fn.piechart = function (offsetX, offsetY, radius, values) {
 					fireEvent(this.node, "mouseup");
 				}
 				this.attr("path", sliceDef(startAngle, this.endAngle));
+				this.attr("fill-opacity", degreesBetween(startAngle, this.endAngle)/360);
 				this.startAngle = startAngle;
 				prevSlice.attr("path", sliceDef(prevSlice.startAngle, startAngle));
+				prevSlice.attr("fill-opacity", degreesBetween(prevSlice.startAngle, startAngle)/360);
 				prevSlice.endAngle = startAngle;
 			},
 			function(x, y){

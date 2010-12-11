@@ -2,13 +2,31 @@
 <html>
   <head>
     <title>adjustable-pie-chart demo</title>
-    <script src="raphael-min.js"></script>
-    <script src="adjustable-pie-chart.js"></script>
+    <script src="raphael-min.js"/></script>
+    <script src="adjustable-pie-chart.js"/></script>
+    <script>
+      window.onload = function(){
+          r = Raphael("chart", 300, 300);
+          chart = r.piechart(150, 150, 100, [10, 22, 32, 2, 18], {color:"blue"});
+      }
+    </script>
+    <style>
+      body {
+        font-family:helvetica;
+      }
+      
+      #container {
+        width:300px;
+        margin:auto;
+        margin-top:50px;
+        text-align:center;
+      }
+    </style>
   </head>
   <body>
-    <script>
-      r = Raphael(0, 0, 300, 300)
-      chart = r.piechart(150, 150, 100, [10, 22, 32, 2, 18], {color:"blue"})
-    </script>
+    <div id="container">
+      Drag lines between segments to resize
+      <div id="chart"></div>
+    </div>
   </body>
 </html>

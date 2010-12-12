@@ -74,8 +74,6 @@ Raphael.fn.piechart = function (offsetX, offsetY, radius, values, opts) {
 				if(this.leftSlice==undefined){
 					this.leftSlice = chart[chart.length-1]
 				}
-				this.rightSlice.attr("fill", "red")
-				this.leftSlice.attr("fill", "yellow")
 			},
 		function(){
 			this.rightSlice.attr("fill", "blue")

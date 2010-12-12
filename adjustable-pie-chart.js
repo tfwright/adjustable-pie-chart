@@ -9,7 +9,7 @@ Raphael.fn.piechart = function (offsetX, offsetY, radius, values, opts) {
   }
 
   for (var i = 0; i < values.length; i++) {
-    var degrees = (360 * values[i] / total)
+    var degrees = (360 * values[i] / total);
     var endAngle = startAngle - degrees;
     var slice = this.path(sliceDef(startAngle, endAngle)).attr({
       stroke: "#000",
@@ -19,13 +19,13 @@ Raphael.fn.piechart = function (offsetX, offsetY, radius, values, opts) {
     });
     slice.startAngle = startAngle;
     slice.endAngle = endAngle;
-    chart.push(slice)
+    chart.push(slice);
     startAngle += (endAngle - startAngle);
   }
 
   function degreesBetween(startAngle, endAngle) {
     if (-endAngle < -startAngle) {
-      return 360 - -startAngle + -endAngle
+      return 360 - -startAngle + -endAngle;
     } else {
       return -endAngle - -startAngle
     }
@@ -38,7 +38,7 @@ Raphael.fn.piechart = function (offsetX, offsetY, radius, values, opts) {
         y1 = offsetY + radius * Math.sin(Math.abs(startAngle) * rad),
         y2 = offsetY + radius * Math.sin(Math.abs(endAngle) * rad),
         pathDef = ["M", offsetX, offsetY, "L", x1, y1, "A", radius, radius, 0, +(degreesBetween(startAngle, endAngle) > 180), 1, x2, y2, "z"];
-    return pathDef;
+    return pathDef
   }
 
   function computeValues() {
@@ -46,7 +46,7 @@ Raphael.fn.piechart = function (offsetX, offsetY, radius, values, opts) {
     for (var i = 0; i < chart.length; i++) {
       values[chart[i].id] = Math.round(total * degreesBetween(chart[i].startAngle, chart[i].endAngle) / 360);
     }
-    return values;
+    return values
   }
 
   chart.drag(
@@ -77,11 +77,11 @@ Raphael.fn.piechart = function (offsetX, offsetY, radius, values, opts) {
     }
     this.leftSlice = chart[this.rightSlice.id - 1];
     if (this.leftSlice == undefined) {
-      this.leftSlice = chart[chart.length - 1]
+      this.leftSlice = chart[chart.length - 1];
     }
   }, function () {
-    this.rightSlice.attr("fill", "blue")
-    this.leftSlice.attr("fill", "blue")
+    this.rightSlice.attr("fill", "blue");
+    this.leftSlice.attr("fill", "blue");
   });
 
   return chart
@@ -96,7 +96,7 @@ function fireEvent(element, event) {
     // dispatch for firefox + others
     var evt = document.createEvent("HTMLEvents");
     evt.initEvent(event, true, true); // event type,bubbling,cancelable
-    return !element.dispatchEvent(evt);
+    return !element.dispatchEvent(evt)
   }
 }
 

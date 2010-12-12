@@ -60,8 +60,8 @@ Raphael.fn.piechart = function (offsetX, offsetY, radius, values, opts) {
 				chart.opts.onchange.call(this, computeValues());
 			},
 			function(x, y){
-				this.startX = x-paper.canvas.offsetLeft;
-				this.startY = y-paper.canvas.offsetTop;
+				this.startX = x-offset(paper.canvas).x;
+				this.startY = y-offset(paper.canvas).y;
 				var clickAngle = -Raphael.angle(this.startX, this.startY, offsetX, offsetY);
 				this.rightSlice = this;
 				if(degreesBetween(this.startAngle, clickAngle) > degreesBetween(clickAngle, this.endAngle)){
@@ -99,3 +99,19 @@ function fireEvent(element,event){
     return !element.dispatchEvent(evt);
     }
 }
+
+function offset(obj) {
+    var left, top;
+    left = top = 0;
+    if (obj.offsetParent) {
+        do {
+            left += obj.offsetLeft;
+            top  += obj.offsetTop;
+        } while (obj = obj.offsetParent);
+    }
+    return {
+        x : left,
+        y : top
+    };
+};
+
